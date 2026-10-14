@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ramesh Namkeen Bhandar – Customer Discovery Case Game</title>
+<style>
+:root{--bg:#faf6ef;--card:#fff;--tx:#241c15;--mu:#6d6257;--ac:#c8501a;--ac2:#fbe6d9;--ok:#2f8f4e;--bad:#c0392b;--bd:#e5dccd;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17130f;--card:#231d17;--tx:#f3ebe0;--mu:#a99d8f;--ac:#ec8247;--ac2:#3a2519;--ok:#5fc27f;--bad:#ee7b6e;--bd:#3a3027}}
+:root[data-theme="dark"]{--bg:#17130f;--card:#231d17;--tx:#f3ebe0;--mu:#a99d8f;--ac:#ec8247;--ac2:#3a2519;--ok:#5fc27f;--bad:#ee7b6e;--bd:#3a3027}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1050px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:12px}
+h1,h2,h3{margin:.2em 0}button{font:inherit;cursor:pointer}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:600}.btn.sec{background:var(--ac2);color:var(--ac)}.btn:disabled{opacity:.4}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.grid{display:grid;grid-template-columns:1fr 270px;gap:12px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:2px solid var(--bd);border-radius:10px;padding:11px 13px;margin:8px 0;color:var(--tx)}
+.opt.sel{border-color:var(--ac);background:var(--ac2)}
+.nav{display:flex;flex-wrap:wrap;gap:6px}.nav button{width:34px;height:34px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}.nav .a{background:var(--ac2);border-color:var(--ac)}.nav .c{outline:2px solid var(--ac)}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid var(--bd);padding:6px 8px;text-align:left;font-size:14px}
+.tag{font-size:12px;color:var(--ac);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.calc input{width:100%;font-size:22px;text-align:right;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.keys button{padding:11px 0;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:18px}.keys .op{background:var(--ac2);color:var(--ac)}.keys .eq{background:var(--ac);color:#fff}
+input[type=range]{width:100%;accent-color:var(--ac)}.xin{font-size:20px;padding:10px;width:220px;border:2px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx)}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}.mu{color:var(--mu);font-size:14px}.big{font-size:44px;font-weight:800;color:var(--ac)}
+.hide{display:none}
+@media print{body{background:#fff;color:#000}.noprint,#intro,#exam{display:none!important}.card{break-inside:avoid;border-color:#bbb}:root{--card:#fff;--tx:#000;--bg:#fff;--bd:#bbb}}
+</style></head><body><div class="wrap">
+
+<div id="intro" class="card">
+<div class="tag">Customer Discovery · Practice Case</div>
+<h1>🥨 Ramesh Namkeen Bhandar</h1>
+<p>You are the consultant. Ramesh, a shopkeeper in Indore, has had flat sales for two years and wants to grow through D2C gift boxes. You will work through <b>4 levels</b> (20 questions): customer, real problem, numbers, decisions.</p>
+<ul><li>Exam style: <b>no feedback while answering</b>. One full report with explanations at the end.</li>
+<li>Use the calculator (+ − × ÷ %, where % is modulo) and the Case File on every screen.</li>
+<li>Question types: multiple choice, sliders (tolerance scoring) and exact-answer boxes (full marks only if exactly right).</li>
+<li>Timer: 30 minutes. The exam auto-submits at 0:00.</li></ul>
+<button class="btn" onclick="start()">Start the case</button>
+</div>
+
+<div id="exam" class="hide">
+<div class="card top noprint"><div><b id="stg"></b><div class="mu" id="prog"></div></div><div><b id="tm">30:00</b> <button class="btn sec" onclick="askSubmit()">Submit exam</button></div>
+<div style="width:100%" class="bar"><i id="pb"></i></div><div id="sc" class="hide" style="width:100%"></div></div>
+<div class="grid"><div>
+<details class="card" open><summary><b>📁 Case File</b> (always available)</summary>
+<p><b>Ramesh Namkeen Bhandar, Indore</b> – 12-year-old shop. Walk-in sales flat at ₹4,00,000/month for 2 years (average bill ₹400). Six months ago he launched a <b>Festival Gift Box</b> online through Instagram.</p>
+<table><tr><th colspan="2">Online gift box economics</th></tr>
+<tr><td>Price / average order value</td><td>₹800</td></tr><tr><td>Product cost (COGS)</td><td>₹360</td></tr><tr><td>Packaging</td><td>₹60</td></tr><tr><td>Delivery</td><td>₹90</td></tr><tr><td>Payment fee</td><td>2% of price</td></tr>
+<tr><td>Orders per customer per year</td><td>3</td></tr><tr><td>Average customer lifespan</td><td>2 years</td></tr><tr><td>Customer acquisition cost (CAC)</td><td>₹600</td></tr><tr><td>Fixed online costs</td><td>₹60,000/month</td></tr></table>
+<table style="margin-top:8px"><tr><th colspan="3">Walk-in market within 3 km (yearly)</th></tr>
+<tr><td>N households</td><td>20,000</td><td>Counted</td></tr><tr><td>P buy from Ramesh</td><td>15%</td><td>Guessed</td></tr><tr><td>F visits per year</td><td>6</td><td>Estimated</td></tr><tr><td>V spend per visit</td><td>₹400</td><td>Counted</td></tr></table>
+<p><b>Segments Ramesh sees:</b> (A) neighbourhood families; (B) corporate HR gifting: about 40 firms in 3 IT parks, each wants ~150 boxes at Diwali; (C) hostel students buying ₹50–100 snacks; (D) NRIs abroad sending gifts to parents.</p>
+<p class="mu">An NRI customer told him: "Last Diwali I sent a big-brand box. It arrived crushed and Papa didn't tell me for 3 days. I felt terrible." In his Instagram survey, 90% said "I'd definitely buy a box for Diwali", but only 12% have reordered.</p></details>
+<div class="card" id="q"></div>
+<div class="top noprint"><button class="btn sec" id="pv" onclick="go(-1)">← Previous</button><button class="btn" id="nx" onclick="go(1)">Next →</button></div>
+<div class="card noprint" style="margin-top:12px"><div class="mu">Questions</div><div class="nav" id="nav"></div></div>
+</div>
+<div><div class="card calc noprint"><b>🧮 Calculator</b><input id="cd" readonly value="0"><div class="keys" id="keys"></div></div></div></div>
+</div>
+
+<div id="report" class="hide"></div>
+</div>
+<script>
+const ST=["Level 1 · Know the Customer","Level 2 · Find the Real Problem","Level 3 · Run the Numbers","Level 4 · Make the Decisions"];
+const REV=["Market Lenses, Beachhead Test, Customer Truth Stack","Mom Test, Iceberg, JTBD, Kill Criterion, Real Problem Test","Unit Economics, LTV/CAC, TAM-SAM-SOM sizing","Gap Model pricing, Three Signals, Choice Architecture, Adjacency"];
+const m=(s,q,o,e)=>({s,t:"m",q,o,e}),r=(s,q,min,max,step,ans,tol,u,e)=>({s,t:"r",q,min,max,step,ans,tol,u,e}),x=(s,q,ans,u,e)=>({s,t:"x",q,ans,u,e});
+const Q=[
+m(0,`An agency defines Ramesh's target as "women aged 30–45, household income above ₹8 lakh, living in Indore". What is the main weakness?`,[[`It is too small to be profitable`,0],[`It shows who CAN buy, not who actually buys or why`,5],[`Demographics are the most reliable predictor of behaviour`,0],[`It ignores income`,0]],`Demographics are the cheapest data and the weakest predictor. Pair them with the Behavioural lens (who does buy) and the Needs/JTBD lens (what to build).`),
+m(0,`Which segment best passes the Beachhead Test (small enough to win, large enough to sustain, connected enough to expand from)?`,[[`All families in Indore (about 4 lakh households)`,0],[`Hostel students buying ₹50–100 snacks`,1],[`Corporate gifting: ~40 firms in 3 IT parks, ~150 boxes each at Diwali`,5],[`NRIs across USA, UK and Gulf`,2]],`Corporate gifting is winnable (40 firms), large enough (40 × 150 × ₹800 = ₹48 lakh) and connected (HR referrals, invoicing and bulk packing carry over). All of Indore is too big to win, students are too small in value, NRIs are hard to reach with limited capital.`),
+m(0,`HR managers say they can only order from vendors who give a GST invoice and accept 15-day credit. Which Customer Truth Stack level is this?`,[[`Level 1: Constraint (can buy)`,5],[`Level 2: Behaviour (will buy)`,0],[`Level 3: Aspiration (will share)`,0]],`It is a hard limit of the customer's world. Violate a constraint and no marketing can fix it, so Ramesh must set up GST invoicing and a credit policy first.`),
+r(0,`Within 12–18 months, what minimum market share (%) should Ramesh be able to win in his beachhead to pass "small enough to win"?`,10,90,5,50,5,"%",`The course rule is dominant share, more than 50%, within 12–18 months using current capital.`),
+m(1,`Instagram survey: 90% said "I'd definitely buy a box for Diwali", yet only 12% reordered. How should Ramesh treat the 90%?`,[[`Compliment: discard it`,1],[`Fluff: convert it by asking about the last time they bought a gift`,5],[`Data: increase production`,0],[`Data: raise the price`,0]],`Future promises are Fluff. Convert them with "Tell me about the last time…". The 12% who really reordered is the data.`),
+m(1,`In the NRI's "crushed box" story, where is the waterline crossing (the emotional driver)?`,[[`Stated need: "better packaging"`,0],[`Latent need: the box must arrive intact and on time`,2],[`Emotional driver: guilt and anxiety about not being there for his parents`,5],[`Demographic: NRI, age 35`,0]],`The waterline is where vocabulary shifts from product words to person words (guilt, worry). Products are built on latent needs, brands on the emotional driver.`),
+m(1,`Which is the best Job Statement for the NRI customer?`,[[`WHEN I want namkeen, I want a good brand, SO I CAN eat tasty snacks`,0],[`FOR NRIs who miss home, WE PROVIDE gift boxes BETTER THAN big brands BECAUSE we are local`,2],[`WHEN Diwali is 10 days away and I am abroad, I WANT TO send a gift that arrives intact and on time, SO I CAN feel I haven't let my parents down (measured by my parents' call that day)`,5],[`WHEN I open Instagram, I want discounts, SO I CAN save money`,0]],`A job statement is WHEN situation / WANT TO motivation / SO I CAN outcome (measured by…). The second option is the Value Proposition format, not a job statement.`),
+r(1,`Ramesh will interview 15 NRIs. Using the course example, at least how many must name a specific gifting incident from the last 3 months, otherwise he drops the idea?`,0,15,1,6,1,"",`Kill criterion: fewer than 6 of 15 means the problem lacks frequency. Write it down and pre-commit before gathering data to avoid rationalising later.`),
+m(1,`Which is the strongest evidence of real demand among NRIs?`,[[`Many NRIs like his Instagram post`,0],[`A competitor exists`,1],[`NRIs already ask cousins in Indore to buy sweets and courier them, paying extra`,5],[`90% say they would use it`,0]],`A workaround is the strongest proof of a real problem, and it also shows people already pay with money and time.`),
+x(2,`Contribution margin per online gift-box order. Type the answer in ₹ (number only).`,274,"₹",`800 − (360 COGS + 60 packaging + 90 delivery + 16 payment fee, which is 2% of 800) = ₹274.`),
+x(2,`Gross margin % of the online box (revenue minus COGS only). Type the number only.`,55,"%",`(800 − 360) ÷ 800 × 100 = 55%.`),
+x(2,`Customer lifetime value (LTV) in ₹, using AOV × orders/year × gross margin % × lifespan.`,2640,"₹",`800 × 3 × 0.55 × 2 = ₹2,640. With CAC ₹600, LTV/CAC = 4.4, above the healthy 3.0.`),
+r(2,`If repeat frequency halves from 3 to 1.5 orders/year (CAC stays ₹600), what does LTV/CAC become? (Healthy is ≥ 3.0)`,0,8,0.1,2.2,0.3,"",`LTV = 800 × 1.5 × 0.55 × 2 = ₹1,320, and 1,320 ÷ 600 = 2.2, below 3.0. Repeat rate is a load-bearing assumption: the business turns unhealthy if it is wrong.`),
+x(2,`Break-even: how many online orders per month cover the ₹60,000 fixed cost? Round up to a whole order.`,219,"orders",`60,000 ÷ 274 = 218.98, so 219 orders. 218 would not fully cover the cost.`),
+x(2,`Bottom-up sizing N × P × F × V for the walk-in market. Type the yearly market in ₹ (full number, e.g. 500000).`,7200000,"₹",`20,000 × 15% = 3,000 buyers; × 6 visits = 18,000; × ₹400 = ₹72,00,000 (₹72 lakh) per year.`),
+m(2,`Which line of the sizing equation deserves most of the research effort?`,[[`N: households (counted)`,0],[`F: visits per year (estimated)`,2],[`V: spend per visit (counted)`,0],[`P: penetration (guessed)`,5]],`Label each input Counted, Estimated or Guessed, then stress-test by halving and doubling. The load-bearing assumption is the one that swings the result and is least certain: the guessed P.`),
+m(3,`NRIs would pay up to ₹1,500 for the peace of mind of a safe, on-time gift. What should Ramesh charge?`,[[`₹1,500: capture all the value`,0],[`₹800–1,000: leave a large consumer surplus for loyalty and word of mouth`,5],[`₹400: match the shop price to win volume`,0],[`₹300: beat big brands on price`,0]],`Consumer surplus = perceived value − price, and sustainable businesses leave plenty of it. Also, ₹400 and ₹300 are below the ₹526 variable cost per order, so contribution would be negative.`),
+m(3,`Which sequence follows the Three Signals rule?`,[[`Aspiration first (luxury branding), fix delivery later`,0],[`Lead with Pain (guaranteed intact, on-time delivery) → build Behaviour (reminders before Diwali, Rakhi, birthdays) → invest in Aspiration (premium "ghar ka swaad" identity)`,5],[`Behaviour first: a daily snack subscription`,1],[`Do all three at once with discounts`,0]],`Pain wins early users without heavy marketing, Behaviour locks in habit, Aspiration builds the moat and pricing power.`),
+m(3,`Ramesh wants a fake "Only 3 boxes left!" counter (he has 500) and a ₹150 "packing fee" revealed at the final payment step. Best decision?`,[[`Keep both, they raise conversions`,0],[`Keep the counter, remove the fee`,1],[`Remove both: show full price upfront and use a true cut-off ("Order by 5 Nov for Diwali delivery")`,5],[`Keep the fee and add a countdown`,0]],`3-question test: Is it true? Disclosed in time? Does it help the customer? The fake counter fails Q1, the drip fee fails Q2, so each scores 1/3 or less, which is a dark pattern. A real delivery cut-off is honest urgency.`),
+m(3,`NRIs love the boxes. Ramesh considers selling festive kurtas to the same customers. What is the key risk?`,[[`None, same customer means same economics`,0],[`Same customer but different operations: apparel returns of 20–40% vs low single digits for food destroy margin, so pilot tiny or skip`,5],[`NRIs will not buy anything else`,0],[`Only a legal issue`,0]],`Nykaa Fashion lesson: same customer, same app, wrong operations. Check the unit economics (returns, reverse logistics) before expanding.`)
+];
+const MAX=q=>q.t=="x"?10:5;let cur=0,ans={},done=false,left=1800,timer,cs="0";
+const $=i=>document.getElementById(i);
+function start(){$("intro").classList.add("hide");$("exam").classList.remove("hide");timer=setInterval(()=>{left--;tick();if(left<=0)submit()},1000);keys();draw()}
+function tick(){$("tm").textContent="⏱ "+String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0")}
+function go(d){cur=Math.max(0,Math.min(Q.length-1,cur+d));draw()}
+function set(i,v){ans[i]=v;draw(true)}
+function draw(keep){const q=Q[cur];let h=`<div class="tag">${ST[q.s]} · Question ${cur+1} of ${Q.length}</div><h3>${q.q}</h3>`;
+if(q.t=="m")q.o.forEach((o,i)=>h+=`<button class="opt ${ans[cur]===i?"sel":""}" onclick="set(${cur},${i})">${o[0]}</button>`);
+if(q.t=="r"){const v=ans[cur]??((q.min+q.max)/2);h+=`<p class="big" style="font-size:30px">${ans[cur]===undefined?"–":v+" "+q.u}</p><input type="range" min="${q.min}" max="${q.max}" step="${q.step}" value="${v}" oninput="set(${cur},+this.value)" onchange="set(${cur},+this.value)"><div class="top mu"><span>${q.min}</span><span>${ans[cur]===undefined?"Move the slider to answer":""}</span><span>${q.max}</span></div>`}
+if(q.t=="x")h+=`<p class="mu">Exact answer only. Use the calculator.</p><input class="xin" inputmode="decimal" placeholder="Your answer" value="${ans[cur]??""}" oninput="ans[cur]=this.value;mark()"> ${q.u}`;
+$("q").innerHTML=h;$("stg").textContent=ST[q.s];const n=Object.keys(ans).filter(k=>ans[k]!==""&&ans[k]!==undefined).length;$("prog").textContent=n+" of "+Q.length+" answered";$("pb").style.width=n/Q.length*100+"%";$("pv").disabled=cur==0;$("nx").disabled=cur==Q.length-1;mark();tick()}
+function mark(){$("nav").innerHTML=Q.map((q,i)=>`<button class="${ans[i]!==undefined&&ans[i]!==""?"a":""} ${i==cur?"c":""}" onclick="cur=${i};draw()">${i+1}</button>`).join("")}
+function askSubmit(){const n=Q.length-Object.keys(ans).filter(k=>ans[k]!==""&&ans[k]!==undefined).length;const s=$("sc");s.classList.remove("hide");s.innerHTML=`<p>${n} unanswered. Submit now? <button class="btn" onclick="submit()">Yes, submit</button> <button class="btn sec" onclick="$('sc').classList.add('hide')">Keep working</button></p>`}
+const num=s=>parseFloat(String(s).replace(/₹|rs\.?|,|%|\s/gi,""));
+function pts(i){const q=Q[i],a=ans[i];if(a===undefined||a==="")return 0;if(q.t=="m")return q.o[a][1];if(q.t=="r"){const d=Math.abs(a-q.ans);return d<=q.tol+1e-9?5:d<=2*q.tol+1e-9?2:0}return num(a)===q.ans?10:0}
+function yours(i){const q=Q[i],a=ans[i];if(a===undefined||a==="")return"Not answered";return q.t=="m"?q.o[a][0]:a+" "+(q.u||"")}
+function right(i){const q=Q[i];return q.t=="m"?q.o.find(o=>o[1]==5)[0]:q.t=="r"?`${q.ans} ${q.u} (accepted ±${q.tol}; half-credit within ±${2*q.tol})`:q.ans+" "+q.u}
+function submit(){clearInterval(timer);done=true;$("exam").classList.add("hide");const R=$("report");R.classList.remove("hide");
+let tot=0,mx=0,sg=ST.map(()=>[0,0]);Q.forEach((q,i)=>{const p=pts(i);tot+=p;mx+=MAX(q);sg[q.s][0]+=p;sg[q.s][1]+=MAX(q)});
+const pc=Math.round(tot/mx*100),rk=pc>=85?"🏆 Master Strategist":pc>=70?"⭐ Sharp Consultant":pc>=50?"📈 Rising Analyst":"🌱 Apprentice: revise and retry";
+let h=`<div class="card"><div class="tag">Final report · Ramesh Namkeen Bhandar case</div><div class="big">${tot} / ${mx} (${pc}%)</div><h2>${rk}</h2><p class="mu">Time used: ${Math.floor((1800-left)/60)} min ${(1800-left)%60} s</p>
+<div class="noprint"><button class="btn" onclick="try{window.print()}catch(e){alert('Open this page in its own browser tab, then press Ctrl+P and Save as PDF.')}">⬇ Download report as PDF</button> <button class="btn sec" onclick="location.reload()">Retake</button><p class="mu">In the print window choose "Save as PDF" as the destination.</p></div></div>
+<div class="card"><h3>Business health by level</h3>`;
+sg.forEach((s,i)=>{const p=Math.round(s[0]/s[1]*100);h+=`<p style="margin:8px 0 2px">${ST[i]}: <b>${s[0]}/${s[1]}</b> (${p}%)</p><div class="bar"><i style="width:${p}%"></i></div>`});
+const w=sg.map((s,i)=>s[0]/s[1]<.7?`<li>${ST[i]}: revise <b>${REV[i]}</b></li>`:"").join("");
+h+=`<h3 style="margin-top:14px">Revise next</h3><ul>${w||"<li>Strong across all levels. Try a different case next.</li>"}</ul></div><div class="card"><h3>Question-by-question explanations</h3>`;
+Q.forEach((q,i)=>{const p=pts(i),f=p==MAX(q);h+=`<div style="border-top:1px solid var(--bd);padding:10px 0;break-inside:avoid"><div class="tag">Q${i+1} · ${ST[q.s].split("·")[1]}</div><b>${q.q}</b><p>Your answer: ${yours(i)}<br>Best answer: <span class="ok">${right(i)}</span><br><span class="${f?"ok":"bad"}">${p} / ${MAX(q)} points</span></p><p class="mu" style="font-size:15px">${q.e}</p></div>`});
+R.innerHTML=h+"</div>";scrollTo(0,0)}
+function keys(){const k=["7","8","9","÷","4","5","6","×","1","2","3","−","0",".","%","+","C","⌫","(",")"];let h="";k.forEach(c=>h+=`<button class="${"÷×−+%".includes(c)?"op":""}" onclick="key('${c}')">${c}</button>`);h+=`<button class="eq" style="grid-column:span 4" onclick="key('=')">=</button>`;$("keys").innerHTML=h}
+function key(c){const d=$("cd");if(c=="C")cs="0";else if(c=="⌫")cs=cs.length>1?cs.slice(0,-1):"0";else if(c=="="){try{const e=cs.replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-");if(!/^[\d+\-*\/%.()\s]+$/.test(e))throw 0;const v=Function("return ("+e+")")();cs=String(Math.round(v*1e8)/1e8)}catch(_){cs="Error"}}else cs=(cs=="0"||cs=="Error")&&!"÷×−+%".includes(c)?c:(cs=="Error"?"0":cs)+c;d.value=cs}
+</script></body></html>
